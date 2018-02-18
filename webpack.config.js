@@ -1,9 +1,14 @@
+const Dotenv = require('dotenv-webpack')
+
 module.exports = {
+    node: {
+      fs: "empty",
+    },     
     entry: "./src/index.js",
     output: {
         filename: "bundle.js"
     },
-    module:{
+    module: {
         loaders: [
             {
                 test: /\.sass$/,
@@ -22,5 +27,11 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    plugins: [
+      new Dotenv({
+        path: './.env',
+        safe: false
+      })
+    ]
 };
