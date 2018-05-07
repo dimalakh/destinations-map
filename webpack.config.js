@@ -1,37 +1,51 @@
-const Dotenv = require('dotenv-webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
-    node: {
-      fs: "empty",
-    },     
-    entry: "./src/index.js",
-    output: {
-        filename: "./docs/bundle.js"
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.sass$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ]
-            },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: "babel-loader",
-                query: {
-                    presets: ["es2015"]
-                }
-            }
+  entry: './src/app.js',
+  output: {
+    path: path.join(__dirname, './build'),
+    filename: 'app.bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.sass$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
         ]
-    },
-    plugins: [
-      new Dotenv({
-        path: './.env',
-        safe: false
-      })
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          'babel-loader'
+        ]
+      }
     ]
-};
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'src'),
+    port: 9000,
+    compress: false,
+    stats: 'errors-only',
+    open: true
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'T9 keyboard',
+      template: 'src/index.html',
+      inject: 'body',
+      minify: {
+        collapseWhitespace: true,
+        collapseInlineTagWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin()
+  ]
+}

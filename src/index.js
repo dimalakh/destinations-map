@@ -4,7 +4,7 @@ import { pointsLayer } from './layerTemplates/pointLayer'
 import originLayer from './layerTemplates/originLayer'
 import data from './data'
 
-mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN
+mapboxgl.accessToken = process.env.MAPBOX_ACCESS_TOKEN || 'pk.eyJ1IjoiZGltYWxha2giLCJhIjoiY2o5dWRqMGNoNzVlOTMzcW15NjZ4am9xaCJ9.ZQ_GMokJ_NajxZKCKj9aDQ'
 const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/dimalakh/cjdqfvhwd1fmr2snzd0inybkr',
